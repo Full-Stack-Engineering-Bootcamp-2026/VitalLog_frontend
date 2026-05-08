@@ -32,6 +32,10 @@ import { loginApi } from "../api/authApi"
 
 import { setAuth } from "../authSlice"
 
+import { Eye, EyeOff } from "lucide-react"
+
+import { useState } from "react"
+
 const loginSchema = z.object({
   email: z.email("Enter valid email"),
 
@@ -44,6 +48,7 @@ export default function LoginPage() {
   const navigate = useNavigate()
 
   const dispatch = useDispatch()
+  const [showPassword, setShowPassword] = useState(false)
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -66,14 +71,17 @@ export default function LoginPage() {
         })
       )
 
+      toast.success("Login successful")
+
       navigate("/")
     } catch (error) {
       console.log(error)
+
+      toast.error("Invalid email or password")
     }
   }
-
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#f5f8f4] px-4 sm:px-6 lg:px-8">
+    <div className="flex min-h-screen items-center justify-center bg-background px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md sm:max-w-lg">
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-green-700 sm:text-4xl">
@@ -140,12 +148,26 @@ export default function LoginPage() {
                       </div>
 
                       <FormControl>
-                        <Input
-                          type="password"
-                          placeholder="Enter password"
-                          className="h-11"
-                          {...field}
-                        />
+                        <div className="relative">
+                          <Input
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Enter password"
+                            className="h-11 pr-10"
+                            {...field}
+                          />
+
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground"
+                          >
+                            {showPassword ? (
+                              <EyeOff size={18} />
+                            ) : (
+                              <Eye size={18} />
+                            )}
+                          </button>
+                        </div>
                       </FormControl>
 
                       <FormMessage />
