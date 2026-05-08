@@ -32,11 +32,6 @@ export const sidebarItems = {
       path: "/fitness-log",
       icon: Activity,
     },
-    {
-      title: "Members",
-      path: "/members",
-      icon: Users,
-    },
   ],
 
   STAFF: [

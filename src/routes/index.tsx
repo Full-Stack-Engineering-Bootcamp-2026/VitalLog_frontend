@@ -3,7 +3,7 @@ import { createBrowserRouter } from "react-router-dom"
 import AppLayout from "@/layouts/AppLayout"
 
 import DashboardPage from "@/features/dashboard/pages/MemberDashboardPage"
-import MyVitalsPage from "@/features/vitals/pages/MyVitalsPage"
+import MyVitalsPage from "@/features/vitals/pages/VitalsPage"
 import FitnessLogPage from "@/features/fitness/pages/FitnessLogPage"
 import MembersPage from "@/pages/MembersPage"
 import FlaggedMembersPage from "@/features/members/pages/FlaggedMembers"
