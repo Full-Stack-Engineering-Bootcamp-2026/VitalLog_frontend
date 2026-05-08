@@ -19,7 +19,7 @@ export const sidebarItems = {
   MEMBER: [
     {
       title: "Overview",
-      path: "/",
+      path: "/dashboard/member",
       icon: Home,
     },
     {
@@ -37,7 +37,7 @@ export const sidebarItems = {
   STAFF: [
     {
       title: "Dashboard",
-      path: "/",
+      path: "/dashboard/staff",
       icon: Home,
     },
     {
@@ -55,7 +55,7 @@ export const sidebarItems = {
   ADMIN: [
     {
       title: "Dashboard",
-      path: "/",
+      path: "/dashboard/admin",
       icon: Home,
     },
     {
