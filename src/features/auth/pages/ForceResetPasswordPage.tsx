@@ -20,6 +20,8 @@ import {
 import { Progress } from "@/components/ui/progress"
 import { forceResetPasswordApi } from "../api/authApi"
 import { toast } from "sonner"
+import { useNavigate } from "react-router-dom"
+import type { ForceResetPasswordRequestDto } from "../types/auth.types"
 const resetSchema = z
   .object({
     password: z.string().min(8, "Password must be at least 8 characters"),
@@ -38,6 +40,7 @@ export default function ForceResetPasswordPage() {
   const [showPassword, setShowPassword] = useState(false)
 
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const navigate = useNavigate()
 
   const form = useForm<ResetFormData>({
     resolver: zodResolver(resetSchema),
@@ -80,8 +83,18 @@ export default function ForceResetPasswordPage() {
         ? "Medium password"
         : "Strong password"
 
-  const onSubmit = async (data: ResetFormData) => {
-    console.log(data)
+  const onSubmit = async (data: ForceResetPasswordRequestDto) => {
+    try {
+      await forceResetPasswordApi(data)
+
+      toast.success("Password updated successfully")
+
+      navigate("/")
+    } catch (error) {
+      console.log(error)
+
+      toast.error("Failed to reset password")
+    }
   }
 
   return (

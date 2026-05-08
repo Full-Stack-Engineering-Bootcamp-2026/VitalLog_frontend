@@ -32,3 +32,7 @@ export interface AuthState {
   token: string | null
   user: UserResponseDto | null
 }
+export interface ForceResetPasswordRequestDto {
+  password: string
+  confirmPassword: string
+}
