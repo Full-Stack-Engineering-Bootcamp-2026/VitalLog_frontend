@@ -13,6 +13,9 @@ import StaffPage from "@/features/staff/StaffPage"
 import EditVitalForm from "@/features/vitals/components/EditVitalForm"
 import RegisterPage from "@/features/auth/pages/RegisterPage"
 import ForceResetPasswordPage from "@/features/auth/pages/ForceResetPasswordPage"
+import LogActivityForm from "@/features/fitness/components/LogActivityForm"
+import EditActivityForm from "@/features/fitness/components/EditActivityForm"
+
 export const router = createBrowserRouter([
   {
     path: "/login",
@@ -53,6 +56,14 @@ export const router = createBrowserRouter([
       {
         path: "fitness-log",
         element: <FitnessLogPage />,
+      },
+      {
+        path: "fitness-log/log",
+        element: <LogActivityForm />,
+      },
+      {
+        path: "fitness-log/edit/:id",
+        element: <EditActivityForm />,
       },
       {
         path: "members",
