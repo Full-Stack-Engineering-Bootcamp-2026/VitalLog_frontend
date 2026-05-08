@@ -18,6 +18,9 @@ import {
   FormItem,
 } from "@/components/ui/form"
 
+import { registerApi } from "../api/authApi"
+import { Progress } from "@/components/ui/progress"
+
 const registerSchema = z
   .object({
     name: z.string().min(3, "Name must be at least 3 characters"),
@@ -54,7 +57,7 @@ export default function RegisterPage() {
       confirmPassword: "",
     },
   })
-
+  //watch() from react hook form like live observer instead of onchange
   const password = form.watch("password")
   //.test()=>pattern matching
   const PasswordStrengthFunction = (password: string) => {
@@ -89,7 +92,7 @@ export default function RegisterPage() {
 
   const onSubmit = async (data: RegisterFormData) => {
     try {
-      console.log(data)
+      await registerApi(data)
 
       toast.success("Account created successfully")
 
@@ -201,15 +204,8 @@ export default function RegisterPage() {
                       </FormControl>
 
                       {/* Password Strength */}
-                      <div className="space-y-1">
-                        <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
-                          <div
-                            className="h-full rounded-full bg-primary transition-all duration-300"
-                            style={{
-                              width: `${strength}%`,
-                            }}
-                          />
-                        </div>
+                      <div className="space-y-2">
+                        <Progress value={strength} className="h-2" />
 
                         <div className="flex justify-between text-xs">
                           <span className="text-primary">{strengthText}</span>
