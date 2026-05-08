@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sidebar"
 
 import { NavLink, useNavigate } from "react-router-dom"
-import { HeartPulse, LogOut, Plus, HelpCircle } from "lucide-react"
+import { HeartPulse, LogOut, Plus } from "lucide-react"
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState, AppDispatch } from "@/app/store"
 import { logout } from "@/features/auth/authSlice"
@@ -28,13 +28,11 @@ export function AppSidebar() {
 
   const handleLogout = () => {
     dispatch(logout())
-    navigate("/login")
-  }
+    navigate("/login")  }
 
   return (
     <Sidebar collapsible="icon" className="border-r border-gray-200 bg-white">
       {/* Logo */}
-
       <SidebarHeader className="border-b border-gray-200 py-3">
         <div className="flex items-center gap-3">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-green-500">
@@ -82,8 +80,7 @@ export function AppSidebar() {
                 <NavLink
                   to={item.path}
                   end={item.path === "/"}
-                  onClick={() => setOpenMobile(false)}
-                >
+                  onClick={() => setOpenMobile(false)}>
                   {({ isActive }) => (
                     <SidebarMenuButton
                       tooltip={item.title}
@@ -92,13 +89,11 @@ export function AppSidebar() {
                         isActive
                           ? "bg-green-50 text-green-700 hover:bg-green-50 hover:text-green-700"
                           : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                      }`}
-                    >
+                      }`}>
                       <Icon
                         className={`h-4 w-4 shrink-0 ${
                           isActive ? "text-green-600" : "text-gray-500"
-                        }`}
-                      />
+                        }`}/>
                       <span>{item.title}</span>
                     </SidebarMenuButton>
                   )}
