@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router-dom"
 
 import AppLayout from "@/layouts/AppLayout"
 
-import DashboardPage from "@/features/dashboard/pages/MemberDashboardPage"
 import MyVitalsPage from "@/features/vitals/pages/VitalsPage"
 import FitnessLogPage from "@/features/fitness/pages/FitnessLogPage"
 import MembersPage from "@/pages/MembersPage"
@@ -11,6 +10,9 @@ import StaffPage from "@/features/staff/StaffPage"
 import LoginPage from "@/features/auth/pages/LoginPage"
 import RegisterPage from "@/features/auth/pages/RegisterPage"
 import ForceResetPasswordPage from "@/features/auth/pages/ForceResetPasswordPage"
+import AdminDashboardPage from "@/features/admin/pages/AdminDashboardPage"
+import MemberDashboardPage from "@/features/members/pages/MemberDashboardPage"
+import StaffManagementPage from "@/features/admin/pages/StaffManagementPage"
 export const router = createBrowserRouter([
   {
     path: "/login",
@@ -31,8 +33,13 @@ export const router = createBrowserRouter([
 
     children: [
       {
-        index: true,
-        element: <DashboardPage />,
+        path: "dashboard/admin",
+        element: <AdminDashboardPage />,
+      },
+
+      {
+        path: "dashboard/member",
+        element: <MemberDashboardPage />,
       },
 
       {
@@ -58,6 +65,10 @@ export const router = createBrowserRouter([
       {
         path: "staff",
         element: <StaffPage />,
+      },
+      {
+        path: "manage-staff",
+        element: <StaffManagementPage />,
       },
     ],
   },

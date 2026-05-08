@@ -64,8 +64,8 @@ export const sidebarItems = {
       icon: Users,
     },
     {
-      title: "Staff",
-      path: "/staff",
+      title: "Staff Management",
+      path: "/manage-staff",
       icon: UserCog,
     },
   ],

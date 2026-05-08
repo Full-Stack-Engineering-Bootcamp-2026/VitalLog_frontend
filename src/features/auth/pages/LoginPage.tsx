@@ -62,20 +62,35 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginFormData) => {
     try {
       const response = await loginApi(data)
-
+      //for nested response
+      const authData = response.data.data
+      const user = authData.user
       dispatch(
         setAuth({
-          token: response.data.data.accessToken,
-          user: response.data.data.user,
+          token: authData.accessToken,
+          user: authData.user,
         })
       )
 
-      if (response.data.data.user.mustChangePassword) {
+      if (authData.user.mustChangePassword) {
         toast.warning("Password reset required")
         navigate("/force-reset-password")
       } else {
         toast.success("Login successful")
-        navigate("/")
+        if (user.role === "ADMIN") {
+          navigate("/dashboard/admin")
+          return
+        }
+
+        if (user.role === "STAFF") {
+          navigate("/dashboard/staff")
+          return
+        }
+
+        if (user.role === "MEMBER") {
+          navigate("/dashboard/member")
+          return
+        }
       }
     } catch (error) {
       console.log(error)
