@@ -10,7 +10,7 @@ import FitnessLogPage from "@/features/fitness/pages/FitnessLogPage"
 import MembersPage from "@/pages/MembersPage"
 import FlaggedMembersPage from "@/features/members/pages/FlaggedMembers"
 import StaffPage from "@/features/staff/StaffPage"
-// import LoginPage from "@/features/auth/pages/LoginPage"
+import EditVitalForm from "@/features/vitals/components/EditVitalForm"
 import RegisterPage from "@/features/auth/pages/RegisterPage"
 import ForceResetPasswordPage from "@/features/auth/pages/ForceResetPasswordPage"
 export const router = createBrowserRouter([
@@ -45,6 +45,10 @@ export const router = createBrowserRouter([
       {
         path: "my-vitals/log",
         element: <LogVitalsForm />,
+      },
+      {
+        path: "my-vitals/edit/:id",
+        element: <EditVitalForm />,
       },
       {
         path: "fitness-log",

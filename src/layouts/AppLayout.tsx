@@ -12,7 +12,7 @@ export default function AppLayout() {
         <AppSidebar />
         <SidebarInset className="flex flex-col flex-1">
           <Navbar />
-          <main className="flex-1 overflow-y-auto overflow-x-hidden p-6 bg-gray-50">
+          <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 bg-gray-50">
             <Outlet />
           </main>
         </SidebarInset>
