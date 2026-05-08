@@ -9,3 +9,6 @@ export const loginApi = (data: LoginRequestDto) => {
 export const registerApi = (data: RegisterRequestDto) => {
   return API.post("/auth/register", data)
 }
+export const forceResetPasswordApi = (data: { password: string }) => {
+  return API.post("/auth/force-reset-password", data)
+}

@@ -10,6 +10,7 @@ import FlaggedMembersPage from "@/features/members/pages/FlaggedMembers"
 import StaffPage from "@/features/staff/StaffPage"
 import LoginPage from "@/features/auth/pages/LoginPage"
 import RegisterPage from "@/features/auth/pages/RegisterPage"
+import ForceResetPasswordPage from "@/features/auth/pages/ForceResetPasswordPage"
 export const router = createBrowserRouter([
   {
     path: "/login",
@@ -19,6 +20,10 @@ export const router = createBrowserRouter([
   {
     path: "/register",
     element: <RegisterPage />,
+  },
+  {
+    path: "/force-reset-password",
+    element: <ForceResetPasswordPage />,
   },
   {
     path: "/",

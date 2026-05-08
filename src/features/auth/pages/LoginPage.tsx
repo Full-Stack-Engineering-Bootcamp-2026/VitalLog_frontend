@@ -70,9 +70,13 @@ export default function LoginPage() {
         })
       )
 
-      toast.success("Login successful")
-
-      navigate("/")
+      if (response.data.data.user.mustChangePassword) {
+        toast.warning("Password reset required")
+        navigate("/force-reset-password")
+      } else {
+        toast.success("Login successful")
+        navigate("/")
+      }
     } catch (error) {
       console.log(error)
 

@@ -1,64 +1,55 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { toast } from "sonner"
-import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Link, useNavigate } from "react-router-dom"
-import { Eye, EyeOff, Mail, Lock, User } from "lucide-react"
+import * as z from "zod"
+
+import { Eye, EyeOff, Lock } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
 
 import {
   Form,
-  FormField,
-  FormLabel,
   FormControl,
-  FormMessage,
+  FormField,
   FormItem,
+  FormLabel,
+  FormMessage,
 } from "@/components/ui/form"
-
-import { registerApi } from "../api/authApi"
 import { Progress } from "@/components/ui/progress"
-
-const registerSchema = z
+import { forceResetPasswordApi } from "../api/authApi"
+import { toast } from "sonner"
+const resetSchema = z
   .object({
-    name: z.string().min(3, "Name must be at least 3 characters"),
-
-    email: z.email("Enter valid email"),
-
     password: z.string().min(8, "Password must be at least 8 characters"),
 
-    confirmPassword: z.string().min(8, "Confirm password is required"),
+    confirmPassword: z.string(),
   })
-
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
+
     path: ["confirmPassword"],
   })
 
-type RegisterFormData = z.infer<typeof registerSchema>
+type ResetFormData = z.infer<typeof resetSchema>
 
-export default function RegisterPage() {
-  const navigate = useNavigate()
-
+export default function ForceResetPasswordPage() {
   const [showPassword, setShowPassword] = useState(false)
 
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-  const form = useForm<RegisterFormData>({
-    resolver: zodResolver(registerSchema),
+  const form = useForm<ResetFormData>({
+    resolver: zodResolver(resetSchema),
 
     defaultValues: {
-      name: "",
-      email: "",
       password: "",
       confirmPassword: "",
     },
   })
-  //watch() from react hook form like live observer instead of onchange
+
   const password = form.watch("password")
-  //.test()=>pattern matching
+
   const PasswordStrengthFunction = (password: string) => {
     let points = 0
 
@@ -89,93 +80,81 @@ export default function RegisterPage() {
         ? "Medium password"
         : "Strong password"
 
-  const onSubmit = async (data: RegisterFormData) => {
-    try {
-      await registerApi(data)
-
-      toast.success("Account created successfully")
-
-      navigate("/login")
-    } catch (error) {
-      console.log(error)
-
-      toast.error("Something went wrong")
-    }
+  const onSubmit = async (data: ResetFormData) => {
+    console.log(data)
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4 py-10">
-      <div className="w-full max-w-md">
-        <Card className="rounded-xl border-border bg-card shadow-sm">
-          <CardContent className="p-8">
-            <div className="mb-8 text-center">
-              <h1 className="text-3xl font-bold text-foreground">VitalLog</h1>
+    <div className="min-h-screen bg-[#f5faf6]">
+      <div className="border-b bg-white py-3">
+        <div className="flex items-center justify-center gap-2">
+          <span className="font-medium text-green-700">VitalLog</span>
+        </div>
+      </div>
 
-              <p className="mt-2 text-sm text-muted-foreground">
-                Empower your health journey today.
-              </p>
+      <div className="border-b bg-yellow-100 py-3 text-center text-sm font-medium text-yellow-800">
+        You must set a new password before continuing.
+      </div>
+
+      <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6 py-14 lg:flex-row lg:items-start lg:justify-between">
+        <div className="max-w-md space-y-6">
+          <div>
+            <div className="inline-flex rounded-full bg-green-100 px-4 py-1 text-xs font-semibold text-green-700">
+              SECURITY PROTOCOL
             </div>
 
+            <h2 className="mt-4 text-2xl font-semibold text-gray-900">
+              Secure Your Access
+            </h2>
+
+            <p className="mt-3 text-sm leading-6 text-muted-foreground">
+              As a staff or administrator member of VitalLog Health, maintaining
+              a secure password is critical for protecting patient metrics and
+              sensitive health data.
+            </p>
+          </div>
+
+          <Card className="rounded-xl border shadow-sm">
+            <CardContent className="flex gap-4 p-5">
+              <div>
+                <h3 className="font-medium">Compliance Requirement</h3>
+
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Your temporary password has expired or is being reset for
+                  first-time use.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="rounded-xl border shadow-sm">
+            <CardContent className="flex gap-4 p-5">
+              <div>
+                <h3 className="font-medium">Data Integrity</h3>
+
+                <p className="mt-1 text-sm text-muted-foreground">
+                  New credentials ensure that all VitalLog interactions are
+                  tracked and authorized.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <Card className="w-full max-w-md rounded-2xl shadow-lg">
+          <CardContent className="p-6">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-5"
               >
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>FULL NAME</FormLabel>
-
-                      <FormControl>
-                        <div className="relative">
-                          <User className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-
-                          <Input
-                            placeholder="John Doe"
-                            className="h-12 bg-input pl-10"
-                            {...field}
-                          />
-                        </div>
-                      </FormControl>
-
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>EMAIL ADDRESS</FormLabel>
-
-                      <FormControl>
-                        <div className="relative">
-                          <Mail className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-
-                          <Input
-                            type="email"
-                            placeholder="name@example.com"
-                            className="h-12 bg-input pl-10"
-                            {...field}
-                          />
-                        </div>
-                      </FormControl>
-
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
+                {/* Password */}
                 <FormField
                   control={form.control}
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>PASSWORD</FormLabel>
+                      <FormLabel>New Password</FormLabel>
 
                       <FormControl>
                         <div className="relative">
@@ -183,8 +162,8 @@ export default function RegisterPage() {
 
                           <Input
                             type={showPassword ? "text" : "password"}
-                            placeholder="Enter password"
-                            className="h-12 bg-input pr-10 pl-10"
+                            placeholder="Enter new password"
+                            className="h-11 pr-10"
                             {...field}
                           />
 
@@ -201,7 +180,6 @@ export default function RegisterPage() {
                           </button>
                         </div>
                       </FormControl>
-
                       {/* Password Strength */}
                       <div className="space-y-2">
                         <Progress value={strength} className="h-2" />
@@ -220,21 +198,20 @@ export default function RegisterPage() {
                   )}
                 />
 
+                {/* Confirm Password */}
                 <FormField
                   control={form.control}
                   name="confirmPassword"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>CONFIRM PASSWORD</FormLabel>
+                      <FormLabel>Confirm New Password</FormLabel>
 
                       <FormControl>
                         <div className="relative">
-                          <Lock className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-
                           <Input
                             type={showConfirmPassword ? "text" : "password"}
                             placeholder="Confirm password"
-                            className="h-12 bg-input pr-10 pl-10"
+                            className="h-11 pr-10"
                             {...field}
                           />
 
@@ -259,34 +236,21 @@ export default function RegisterPage() {
                   )}
                 />
 
-                <Button
-                  type="submit"
-                  className="h-12 w-full text-base font-medium"
-                >
-                  Create Account
+                <Button type="submit" className="h-11 w-full">
+                  Set Password & Continue
                 </Button>
+
+                <p className="text-center text-xs leading-5 text-muted-foreground">
+                  By updating your password, you agree to VitalLogs internal
+                  security policy and data access protocols.
+                </p>
               </form>
             </Form>
-
-            {/* Footer */}
-            <div className="mt-6 text-center text-sm">
-              <span className="text-muted-foreground">
-                Already have an account?
-              </span>{" "}
-              <Link
-                to="/login"
-                className="font-medium text-primary hover:underline"
-              >
-                Login
-              </Link>
-            </div>
-
-            <div className="mt-5 flex items-center justify-center gap-2 text-xs text-muted-foreground">
-              <span>Secured by VitalShield</span>
-            </div>
           </CardContent>
         </Card>
       </div>
+
+      {/* Footer */}
     </div>
   )
 }
