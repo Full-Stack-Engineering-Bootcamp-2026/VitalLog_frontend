@@ -62,7 +62,7 @@ export default function StaffManagementPage() {
           </p>
         </div>
 
-        <Link to="/staff/create">
+        <Link to="/admin/add-staff">
           <Button className="w-full gap-2 sm:w-auto">
             <Plus size={18} />
             Add Staff

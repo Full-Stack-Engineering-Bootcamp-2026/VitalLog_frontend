@@ -13,6 +13,7 @@ import ForceResetPasswordPage from "@/features/auth/pages/ForceResetPasswordPage
 import AdminDashboardPage from "@/features/admin/pages/AdminDashboardPage"
 import MemberDashboardPage from "@/features/members/pages/MemberDashboardPage"
 import StaffManagementPage from "@/features/admin/pages/StaffManagementPage"
+import CreateStaffPage from "@/features/admin/pages/CreateStaffPage"
 export const router = createBrowserRouter([
   {
     path: "/login",
@@ -67,8 +68,23 @@ export const router = createBrowserRouter([
         element: <StaffPage />,
       },
       {
-        path: "manage-staff",
-        element: <StaffManagementPage />,
+        path: "admin",
+        children: [
+          {
+            path: "dashboard",
+            element: <AdminDashboardPage />,
+          },
+
+          {
+            path: "manage-staff",
+            element: <StaffManagementPage />,
+          },
+
+          {
+            path: "add-staff",
+            element: <CreateStaffPage />,
+          },
+        ],
       },
     ],
   },
