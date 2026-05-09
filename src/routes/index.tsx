@@ -1,4 +1,5 @@
-import { createBrowserRouter } from "react-router-dom"
+import { createBrowserRouter, Navigate } from "react-router-dom"
+
 import AppLayout from "@/layouts/AppLayout"
 import PublicRoute from "./PublicRoute"
 
@@ -24,6 +25,11 @@ import CreateStaffPage from "@/features/admin/pages/CreateStaffPage"
 
 export const router = createBrowserRouter([
   {
+    path: "/",
+    element: <Navigate to="/login" replace />,
+  },
+
+  {
     path: "/login",
     element: (
       <PublicRoute>
@@ -31,56 +37,67 @@ export const router = createBrowserRouter([
       </PublicRoute>
     ),
   },
+
   {
     path: "/register",
     element: <RegisterPage />,
   },
+
   {
     path: "/force-reset-password",
     element: <ForceResetPasswordPage />,
   },
+
   {
-    path: "/",
     element: <AppLayout />,
     children: [
       {
-        path: "dashboard/member",
+        path: "/dashboard/member",
         element: <MemberDashboardPage />,
       },
+
       {
-        path: "my-vitals",
+        path: "/my-vitals",
         element: <MyVitalsPage />,
       },
+
       {
-        path: "my-vitals/log",
+        path: "/my-vitals/log",
         element: <LogVitalsForm />,
       },
+
       {
-        path: "my-vitals/edit/:id",
+        path: "/my-vitals/edit/:id",
         element: <EditVitalForm />,
       },
+
       {
-        path: "fitness-log",
+        path: "/fitness-log",
         element: <FitnessLogPage />,
       },
+
       {
-        path: "fitness-log/log",
+        path: "/fitness-log/log",
         element: <LogActivityForm />,
       },
+
       {
-        path: "fitness-log/edit/:id",
+        path: "/fitness-log/edit/:id",
         element: <EditActivityForm />,
       },
+
       {
-        path: "members",
+        path: "/members",
         element: <MembersPage />,
       },
+
       {
-        path: "flagged-members",
+        path: "/flagged-members",
         element: <FlaggedMembersPage />,
       },
+
       {
-        path: "staff",
+        path: "/staff",
         children: [
           {
             path: "dashboard",
@@ -88,8 +105,9 @@ export const router = createBrowserRouter([
           },
         ],
       },
+
       {
-        path: "admin",
+        path: "/admin",
         children: [
           {
             path: "dashboard",
