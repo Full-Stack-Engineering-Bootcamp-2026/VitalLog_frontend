@@ -12,11 +12,7 @@ export default function AppLayout() {
         <AppSidebar />
         <SidebarInset className="flex flex-1 flex-col">
           <Navbar />
-<<<<<<< HEAD
-          <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-6">
-=======
-          <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 bg-gray-50">
->>>>>>> origin/feat/dashboard/member
+          <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-4">
             <Outlet />
           </main>
         </SidebarInset>
