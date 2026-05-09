@@ -21,8 +21,8 @@ import { Input } from "@/components/ui/input"
 
 import { Button } from "@/components/ui/button"
 
-import { Mail, User, Users } from "lucide-react"
-
+import { Mail, User } from "lucide-react"
+import { createStaffApi } from "@/features/auth/api/authApi"
 const createStaffSchema = z.object({
   name: z.string().min(2, "Full name is required"),
 
@@ -45,7 +45,7 @@ export default function CreateStaffPage() {
 
   const onSubmit = async (data: CreateStaffFormData) => {
     try {
-      console.log(data)
+      await createStaffApi(data)
 
       toast.success("Staff account created successfully")
 
