@@ -14,6 +14,7 @@ import EditVitalForm from "@/features/vitals/components/EditVitalForm"
 import FitnessLogPage from "@/features/fitness/pages/FitnessLogPage"
 import LogActivityForm from "@/features/fitness/components/LogActivityForm"
 import EditActivityForm from "@/features/fitness/components/EditActivityForm"
+import ChangePasswordPage from "@/features/auth/pages/ChangePasswordPage"
 
 import MembersPage from "@/pages/MembersPage"
 import FlaggedMembersPage from "@/features/shared/pages/FlaggedMembersPage"
@@ -49,6 +50,11 @@ export const router = createBrowserRouter([
   },
 
   {
+    path: "change-password",
+    element: <ChangePasswordPage />,
+  },
+  {
+    path: "/",
     element: <AppLayout />,
     children: [
       {

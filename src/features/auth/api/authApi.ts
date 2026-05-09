@@ -20,3 +20,8 @@ export const forceResetPasswordApi = (data: ForceResetPasswordRequestDto) => {
 export const createStaffApi = (data: CreateStaffRequestDto) => {
   return API.post("/admin/staff", data)
 }
+
+export const changePasswordApi = (data: {
+  currentPassword: string
+  newPassword: string
+}) => API.patch("/auth/change-password", data)
