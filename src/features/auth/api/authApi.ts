@@ -16,3 +16,6 @@ export const registerApi = (data: RegisterRequestDto) => {
 export const forceResetPasswordApi = (data: ForceResetPasswordRequestDto) => {
   return API.patch("/auth/force-reset-password", data)
 }
+
+export const changePasswordApi = (data: { currentPassword: string; newPassword: string }) =>
+  API.patch("/auth/change-password", data)

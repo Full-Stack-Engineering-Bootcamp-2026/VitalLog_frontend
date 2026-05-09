@@ -15,6 +15,7 @@ import RegisterPage from "@/features/auth/pages/RegisterPage"
 import ForceResetPasswordPage from "@/features/auth/pages/ForceResetPasswordPage"
 import LogActivityForm from "@/features/fitness/components/LogActivityForm"
 import EditActivityForm from "@/features/fitness/components/EditActivityForm"
+import ChangePasswordPage from "@/features/auth/pages/ChangePasswordPage"
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
   {
     path: "/force-reset-password",
     element: <ForceResetPasswordPage />,
+  },
+  {
+    path: "change-password",
+    element: <ChangePasswordPage />,
   },
   {
     path: "/",
