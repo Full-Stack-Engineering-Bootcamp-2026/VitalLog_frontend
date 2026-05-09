@@ -39,7 +39,14 @@ import { useState } from "react"
 const loginSchema = z.object({
   email: z.email("Enter valid email"),
 
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .max(64, "Password cant exceed 64 characters")
+    .regex(/[A-Z]/, "Password must contain uppercase letter")
+    .regex(/[a-z]/, "Password must contain lowercase letter")
+    .regex(/[0-9]/, "Password must contain number")
+    .regex(/[^A-Za-z0-9]/, "Password must contain special character"),
 })
 
 type LoginFormData = z.infer<typeof loginSchema>
