@@ -85,12 +85,12 @@ export default function LoginPage() {
       } else {
         toast.success("Login successful")
         if (user.role === "ADMIN") {
-          navigate("/dashboard/admin")
+          navigate("/admin/dashboard")
           return
         }
 
         if (user.role === "STAFF") {
-          navigate("/dashboard/staff")
+          navigate("/staff/dashboard")
           return
         }
 

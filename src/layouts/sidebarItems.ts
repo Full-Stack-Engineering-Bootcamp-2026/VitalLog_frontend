@@ -37,7 +37,7 @@ export const sidebarItems = {
   STAFF: [
     {
       title: "Dashboard",
-      path: "/dashboard/staff",
+      path: "/staff/dashboard",
       icon: Home,
     },
     {
@@ -55,7 +55,7 @@ export const sidebarItems = {
   ADMIN: [
     {
       title: "Dashboard",
-      path: "/dashboard/admin",
+      path: "/admin/dashboard",
       icon: Home,
     },
     {
@@ -67,6 +67,11 @@ export const sidebarItems = {
       title: "Staff Management",
       path: "/admin/manage-staff",
       icon: UserCog,
+    },
+    {
+      title: "Flagged Members",
+      path: "/flagged-members",
+      icon: ShieldAlert,
     },
   ],
 }
