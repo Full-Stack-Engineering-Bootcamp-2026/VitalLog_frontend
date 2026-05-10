@@ -21,7 +21,7 @@ import MembersPage from "@/pages/MembersPage"
 import FlaggedMembersPage from "@/features/shared/pages/FlaggedMembersPage"
 
 import AdminDashboardPage from "@/features/shared/pages/AdminDashboardPage"
-import MemberDashboardPage from "@/features/member/pages/MemberDashboardPage"
+import MemberDashboardPage from "@/features/dashboard/pages/MemberDashboardPage"
 import StaffManagementPage from "@/features/admin/pages/StaffManagementPage"
 import CreateStaffPage from "@/features/admin/pages/CreateStaffPage"
 

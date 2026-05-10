@@ -2,9 +2,16 @@ import { useEffect, useState } from "react"
 import { toast } from "sonner"
 import { Pencil } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { fetchProfileApi, updateProfileApi, uploadProfileImageApi } from "../api/profileApi"
+import {
+  fetchProfileApi,
+  updateProfileApi,
+  uploadProfileImageApi,
+} from "../api/profileApi"
 import { fetchStreakApi } from "@/features/vitals/api/streakApi"
-import type { ProfileResponseDto, UpdateProfileRequestDto } from "../types/profile.types"
+import type {
+  ProfileResponseDto,
+  UpdateProfileRequestDto,
+} from "../types/profile.types"
 import type { StreakResponseDto } from "@/features/vitals/api/streakApi"
 import ProfileIdentityCard from "../components/ProfileIdentityCard"
 import ProfileStatGrid from "../components/ProfileStatGrid"
@@ -14,17 +21,33 @@ import WellnessScore from "../components/WellnessScore"
 import EditProfileModal from "../components/EditProfileModal"
 
 const toTags = (val: string | null): string[] =>
-  val ? val.split(",").map((s) => s.trim()).filter(Boolean) : []
+  val
+    ? val
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean)
+    : []
 
 const getWellnessScore = (profile: ProfileResponseDto): number => {
-  const fields = [profile.age, profile.gender, profile.height, profile.weight, profile.medicalConditions, profile.fitnessGoal]
+  const fields = [
+    profile.age,
+    profile.gender,
+    profile.height,
+    profile.weight,
+    profile.medicalConditions,
+    profile.fitnessGoal,
+  ]
   const filled = fields.filter((f) => f !== null && f !== "").length
   return Math.round((filled / fields.length) * 100)
 }
 
 export default function ProfilePage() {
   const [profile, setProfile] = useState<ProfileResponseDto | null>(null)
-  const [streak, setStreak] = useState<StreakResponseDto>({ currentStreak: 0, longestStreak: 0, lastLoggedDate: null })
+  const [streak, setStreak] = useState<StreakResponseDto>({
+    currentStreak: 0,
+    longestStreak: 0,
+    lastLoggedDate: null,
+  })
   const [editOpen, setEditOpen] = useState(false)
   const [form, setForm] = useState<UpdateProfileRequestDto>({})
   const [imagePreview, setImagePreview] = useState<string | null>(null)
@@ -65,7 +88,9 @@ export default function ProfilePage() {
     setImagePreview(URL.createObjectURL(file))
     try {
       const signedUrl = await uploadProfileImageApi(file)
-      setProfile((prev) => prev ? { ...prev, profileImageUrl: signedUrl } : prev)
+      setProfile((prev) =>
+        prev ? { ...prev, profileImageUrl: signedUrl } : prev
+      )
       toast.success("Profile image updated")
     } catch {
       toast.error("Image upload failed")
@@ -88,11 +113,12 @@ export default function ProfilePage() {
 
   return (
     <div className="space-y-4">
-
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-2xl font-bold">My Health Profile</h1>
-          <p className="text-sm text-muted-foreground">Manage your baseline metrics and health preferences.</p>
+          <p className="text-sm text-muted-foreground">
+            Manage your baseline metrics and health preferences.
+          </p>
         </div>
         <Button variant="outline" onClick={openEdit} className="gap-2">
           <Pencil size={14} />
