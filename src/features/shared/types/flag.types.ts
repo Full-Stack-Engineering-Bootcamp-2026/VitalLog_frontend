@@ -64,6 +64,7 @@ export interface GetFlagsRequestDto {
   page: number
   limit: number
   status?: FlagStatusType
+  search?: string
 }
 
 export interface FlagListItemResponseDto {
