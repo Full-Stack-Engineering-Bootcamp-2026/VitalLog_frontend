@@ -12,5 +12,5 @@ export const getRegistrationTrendApi = () => {
 export const getFlaggedVitalsDistributionApi = () => {
   return API.get<{
     data: FlaggedVitalsDistributionResponseDto
-  }>("/admin/dashboard/flagged-vitals")
+  }>("/admin/dashboard/flagged-vitals-distribution")
 }

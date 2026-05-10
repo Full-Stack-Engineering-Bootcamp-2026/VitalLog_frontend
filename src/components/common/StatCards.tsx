@@ -3,7 +3,6 @@ interface StatCardProps {
   value: string | number
   subtext?: string
   color: "green" | "blue" | "red" | "amber"
-  icon?: React.ReactNode
 }
 
 const colorMap = {
@@ -18,26 +17,15 @@ export default function StatCard({
   value,
   subtext,
   color,
-  icon,
 }: StatCardProps) {
   const c = colorMap[color]
-
   return (
     <div className="rounded-xl bg-white p-5 shadow-sm">
-      <div className="flex items-start justify-between">
-        <p
-          className={`text-xs font-semibold tracking-wide uppercase ${c.label}`}
-        >
-          {label}
-        </p>
-
-        {icon && <div>{icon}</div>}
-      </div>
-
+      <p className={`text-xs font-semibold tracking-wide uppercase ${c.label}`}>
+        {label}
+      </p>
       <p className="mt-2 text-2xl font-bold text-gray-900">{value}</p>
-
       {subtext && <p className="text-xs text-gray-400">{subtext}</p>}
-
       <div className={`mt-3 h-1 w-full rounded-full ${c.bar}`} />
     </div>
   )
