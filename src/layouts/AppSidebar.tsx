@@ -33,7 +33,7 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon" className="border-r border-gray-200 bg-white">
       {/* Logo */}
-      <SidebarHeader className="border-b border-gray-200 py-3">
+      <SidebarHeader className="border-b border-gray-100 py-3">
         <div className="flex items-center gap-3">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-green-500">
             <HeartPulse className="h-5 w-5 text-white" />
@@ -65,10 +65,10 @@ export function AppSidebar() {
                     <SidebarMenuButton
                       tooltip={item.title}
                       isActive={isActive}
-                      className={`w-full rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+                      className={`w-full rounded-lg px-3 py-2.5 text-sm font-medium transition-colors  ${
                         isActive
                           ? "bg-green-50 text-green-700 hover:bg-green-50 hover:text-green-700"
-                          : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                          : "text-gray-500 hover:bg-green-50 hover:text-green-700"
                       }`}>
                       <Icon
                         className={`h-4 w-4 shrink-0 ${
