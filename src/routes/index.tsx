@@ -24,7 +24,7 @@ import AdminDashboardPage from "@/features/shared/pages/AdminDashboardPage"
 import MemberDashboardPage from "@/features/dashboard/pages/MemberDashboardPage"
 import StaffManagementPage from "@/features/admin/pages/StaffManagementPage"
 import CreateStaffPage from "@/features/admin/pages/CreateStaffPage"
-
+import StaffMemberDashboardPage from "@/features/shared/pages/StaffMemberDashboardPage"
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -133,6 +133,10 @@ export const router = createBrowserRouter([
       {
         path: "profile",
         element: <ProfilePage />,
+      },
+      {
+        path: "/members/:id/dashboard",
+        element: <StaffMemberDashboardPage />,
       },
     ],
   },

@@ -10,7 +10,7 @@ type Props = {
   member: StaffMemberListItemDto
   onViewDashboard: (memberId: number) => void
 }
-
+//Profile avatar fallback if image is missing
 export default function MemberProfileCard({ member, onViewDashboard }: Props) {
   const initials = member.name
     .split(" ")
