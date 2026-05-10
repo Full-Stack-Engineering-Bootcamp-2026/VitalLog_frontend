@@ -5,6 +5,7 @@ import type {
   RegisterRequestDto,
   ForceResetPasswordRequestDto,
   CreateStaffRequestDto,
+  ForgotPasswordRequestDto,
 } from "../types/auth.types"
 
 export const loginApi = (data: LoginRequestDto) => {
@@ -25,3 +26,7 @@ export const changePasswordApi = (data: {
   currentPassword: string
   newPassword: string
 }) => API.patch("/auth/change-password", data)
+
+export const forgotPasswordApi = (data: ForgotPasswordRequestDto) => {
+  return API.post("/auth/forgot-password", data)
+}

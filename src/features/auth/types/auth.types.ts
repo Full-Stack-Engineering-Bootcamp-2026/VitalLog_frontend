@@ -50,3 +50,6 @@ export interface StaffResponseDto {
   mustChangePassword: boolean
   createdAt: string
 }
+export interface ForgotPasswordRequestDto {
+  email: string
+}

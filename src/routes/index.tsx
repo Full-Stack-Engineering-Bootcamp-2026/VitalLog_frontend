@@ -25,6 +25,7 @@ import MemberDashboardPage from "@/features/dashboard/pages/MemberDashboardPage"
 import StaffManagementPage from "@/features/admin/pages/StaffManagementPage"
 import CreateStaffPage from "@/features/admin/pages/CreateStaffPage"
 import StaffMemberDashboardPage from "@/features/shared/pages/StaffMemberDashboardPage"
+import ForgotPasswordPage from "@/features/auth/pages/ForgotPasswordPage"
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -53,6 +54,10 @@ export const router = createBrowserRouter([
   {
     path: "change-password",
     element: <ChangePasswordPage />,
+  },
+  {
+    path: "forgot-password",
+    element: <ForgotPasswordPage />,
   },
   {
     path: "/",
