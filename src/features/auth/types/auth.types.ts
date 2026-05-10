@@ -53,3 +53,8 @@ export interface StaffResponseDto {
 export interface ForgotPasswordRequestDto {
   email: string
 }
+export interface ResetPasswordRequestDto {
+  resetToken: string
+  password: string
+  confirmPassword: string
+}

@@ -6,6 +6,7 @@ import type {
   ForceResetPasswordRequestDto,
   CreateStaffRequestDto,
   ForgotPasswordRequestDto,
+  ResetPasswordRequestDto,
 } from "../types/auth.types"
 
 export const loginApi = (data: LoginRequestDto) => {
@@ -29,4 +30,7 @@ export const changePasswordApi = (data: {
 
 export const forgotPasswordApi = (data: ForgotPasswordRequestDto) => {
   return API.post("/auth/forgot-password", data)
+}
+export const resetPasswordApi = (data: ResetPasswordRequestDto) => {
+  return API.post("/auth/reset-password", data)
 }

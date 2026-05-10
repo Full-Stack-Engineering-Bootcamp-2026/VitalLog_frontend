@@ -26,6 +26,7 @@ import StaffManagementPage from "@/features/admin/pages/StaffManagementPage"
 import CreateStaffPage from "@/features/admin/pages/CreateStaffPage"
 import StaffMemberDashboardPage from "@/features/shared/pages/StaffMemberDashboardPage"
 import ForgotPasswordPage from "@/features/auth/pages/ForgotPasswordPage"
+import ResetPasswordPage from "@/features/auth/pages/ResetPasswordPage"
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -58,6 +59,10 @@ export const router = createBrowserRouter([
   {
     path: "forgot-password",
     element: <ForgotPasswordPage />,
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPasswordPage />,
   },
   {
     path: "/",
