@@ -36,3 +36,25 @@ export interface ForceResetPasswordRequestDto {
   password: string
   confirmPassword: string
 }
+export interface CreateStaffRequestDto {
+  name: string
+  email: string
+}
+
+export interface StaffResponseDto {
+  id: number
+  name: string
+  email: string
+  role: RoleType
+  isActive: boolean
+  mustChangePassword: boolean
+  createdAt: string
+}
+export interface ForgotPasswordRequestDto {
+  email: string
+}
+export interface ResetPasswordRequestDto {
+  resetToken: string
+  password: string
+  confirmPassword: string
+}

@@ -24,7 +24,14 @@ import { useNavigate } from "react-router-dom"
 import type { ForceResetPasswordRequestDto } from "../types/auth.types"
 const resetSchema = z
   .object({
-    password: z.string().min(8, "Password must be at least 8 characters"),
+    password: z
+      .string()
+      .min(12, "Password must be at least 12 characters")
+      .max(64, "Password cant exceed 64 characters")
+      .regex(/[A-Z]/, "Password must contain uppercase letter")
+      .regex(/[a-z]/, "Password must contain lowercase letter")
+      .regex(/[0-9]/, "Password must contain number")
+      .regex(/[^A-Za-z0-9]/, "Password must contain special character"),
 
     confirmPassword: z.string(),
   })
@@ -57,13 +64,13 @@ export default function ForceResetPasswordPage() {
     let points = 0
 
     // Min length
-    if (password.length >= 8) points = points + 20
+    if (password.length >= 12) points = points + 20
 
     // Upper case
     if (/[A-Z]/.test(password)) points = points + 20
 
     // Lower case
-    if (/[a-z]/.test(password)) points = points + 20
+    //if (/[a-z]/.test(password)) points = points + 20
 
     // Number
     if (/[0-9]/.test(password)) points = points + 20

@@ -20,7 +20,7 @@ export const sidebarItems = {
   MEMBER: [
     {
       title: "Overview",
-      path: "/",
+      path: "/dashboard/member",
       icon: Home,
     },
     {
@@ -43,7 +43,7 @@ export const sidebarItems = {
   STAFF: [
     {
       title: "Dashboard",
-      path: "/",
+      path: "/staff/dashboard",
       icon: Home,
     },
     {
@@ -61,7 +61,7 @@ export const sidebarItems = {
   ADMIN: [
     {
       title: "Dashboard",
-      path: "/",
+      path: "/admin/dashboard",
       icon: Home,
     },
     {
@@ -70,9 +70,14 @@ export const sidebarItems = {
       icon: Users,
     },
     {
-      title: "Staff",
-      path: "/staff",
+      title: "Staff Management",
+      path: "/admin/manage-staff",
       icon: UserCog,
+    },
+    {
+      title: "Flagged Members",
+      path: "/flagged-members",
+      icon: ShieldAlert,
     },
   ],
 }

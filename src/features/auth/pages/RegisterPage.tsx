@@ -27,7 +27,14 @@ const registerSchema = z
 
     email: z.email("Enter valid email"),
 
-    password: z.string().min(8, "Password must be at least 8 characters"),
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .max(64, "Password cant exceed 64 characters")
+      .regex(/[A-Z]/, "Password must contain uppercase letter")
+      .regex(/[a-z]/, "Password must contain lowercase letter")
+      .regex(/[0-9]/, "Password must contain number")
+      .regex(/[^A-Za-z0-9]/, "Password must contain special character"),
 
     confirmPassword: z.string().min(8, "Confirm password is required"),
   })
@@ -48,7 +55,7 @@ export default function RegisterPage() {
 
   const form = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
-
+    mode: "onChange",
     defaultValues: {
       name: "",
       email: "",
