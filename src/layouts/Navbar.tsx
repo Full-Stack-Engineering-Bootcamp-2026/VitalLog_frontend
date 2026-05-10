@@ -5,7 +5,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar"
 import { useSelector } from "react-redux"
 import type { RootState } from "@/app/store"
 import { useNavigate } from "react-router-dom"
-import { UserCircle, Pencil, KeyRound, ChevronDown } from "lucide-react"
+import { UserCircle, Pencil, KeyRound } from "lucide-react"
 import { fetchProfileApi } from "@/features/profile/api/profileApi"
 
 export function Navbar() {
@@ -34,7 +34,6 @@ export function Navbar() {
 
   return (
     <header className="flex h-16 shrink-0 items-center justify-between border-b border-gray-200 bg-white px-6">
-
       {/* Left — sidebar trigger */}
       <div className="flex items-center">
         <SidebarTrigger className="cursor-pointer text-gray-500 hover:text-gray-900" />
@@ -62,16 +61,11 @@ export function Navbar() {
               <UserCircle className="h-6 w-6 text-muted-foreground" />
             </div>
           )}
-
-          <ChevronDown
-            size={14}
-            className={`text-gray-400 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-          />
         </button>
 
         {/* dropdown */}
         {open && (
-          <div className="absolute right-0 top-12 z-50 w-48 overflow-hidden rounded-xl border border-gray-100 bg-white shadow-lg">
+          <div className="absolute top-12 right-0 z-50 w-48 overflow-hidden rounded-xl border border-gray-100 bg-white shadow-lg">
             <div className="flex flex-col py-1">
               <button
                 onClick={() => handleNavigate("/profile")}
@@ -100,7 +94,6 @@ export function Navbar() {
           </div>
         )}
       </div>
-
     </header>
   )
 }

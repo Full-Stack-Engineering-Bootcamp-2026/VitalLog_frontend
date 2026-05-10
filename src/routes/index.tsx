@@ -27,6 +27,8 @@ import CreateStaffPage from "@/features/admin/pages/CreateStaffPage"
 import StaffMemberDashboardPage from "@/features/shared/pages/StaffMemberDashboardPage"
 import ForgotPasswordPage from "@/features/auth/pages/ForgotPasswordPage"
 import ResetPasswordPage from "@/features/auth/pages/ResetPasswordPage"
+import ProfileEditPage from "@/features/profile/pages/ProfileEditPage"
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -101,6 +103,10 @@ export const router = createBrowserRouter([
       {
         path: "/fitness-log/edit/:id",
         element: <EditActivityForm />,
+      },
+      {
+        path: "profile/edit",
+        element: <ProfileEditPage />,
       },
 
       {
