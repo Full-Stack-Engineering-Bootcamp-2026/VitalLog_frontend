@@ -12,7 +12,7 @@ import { getStaffMemberDashboardApi } from "../api/staffApi"
 import MemberDashboardStats from "../components/MemberDashboardStats"
 
 import type { StaffMemberDashboardResponseDto } from "../types/staff.types"
-
+import RaiseFlagModal from "../components/RaiseFlagModal"
 export default function StaffMemberDashboardPage() {
   const { id } = useParams()
 
@@ -23,6 +23,7 @@ export default function StaffMemberDashboardPage() {
   const [data, setData] = useState<StaffMemberDashboardResponseDto | null>(null)
   const [page, setPage] = useState(1)
   const [limit] = useState(5)
+  const [isRaiseFlagOpen, setIsRaiseFlagOpen] = useState(false)
 
   const fetchDashboard = async () => {
     if (!id) return
@@ -58,9 +59,7 @@ export default function StaffMemberDashboardPage() {
         </div>
 
         {isStaff && (
-          <Button onClick={() => console.log("open raise flag modal")}>
-            Raise Flag
-          </Button>
+          <Button onClick={() => setIsRaiseFlagOpen(true)}>Raise Flag</Button>
         )}
       </div>
 
@@ -154,6 +153,12 @@ export default function StaffMemberDashboardPage() {
           ))}
         </CardContent>
       </Card>
+      <RaiseFlagModal
+        open={isRaiseFlagOpen}
+        memberId={data.member.id}
+        onClose={() => setIsRaiseFlagOpen(false)}
+        onSuccess={fetchDashboard}
+      />
     </div>
   )
 }
