@@ -5,6 +5,7 @@ import {
   ShieldAlert,
   UserCog,
   Users,
+  UserCircle,
 } from "lucide-react"
 
 import type { LucideIcon } from "lucide-react"
@@ -31,6 +32,11 @@ export const sidebarItems = {
       title: "Fitness Log",
       path: "/fitness-log",
       icon: Activity,
+    },
+    {
+      title: "My Profile",
+      path: "/profile",
+      icon: UserCircle,
     },
   ],
 
