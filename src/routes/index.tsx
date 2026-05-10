@@ -15,6 +15,7 @@ import FitnessLogPage from "@/features/fitness/pages/FitnessLogPage"
 import LogActivityForm from "@/features/fitness/components/LogActivityForm"
 import EditActivityForm from "@/features/fitness/components/EditActivityForm"
 import ChangePasswordPage from "@/features/auth/pages/ChangePasswordPage"
+import ProfilePage from "@/features/profile/pages/ProfilePage"
 
 import MembersPage from "@/pages/MembersPage"
 import FlaggedMembersPage from "@/features/shared/pages/FlaggedMembersPage"
@@ -128,6 +129,10 @@ export const router = createBrowserRouter([
             element: <CreateStaffPage />,
           },
         ],
+      },
+      {
+        path: "profile",
+        element: <ProfilePage />,
       },
     ],
   },
