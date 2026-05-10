@@ -17,7 +17,7 @@ import EditActivityForm from "@/features/fitness/components/EditActivityForm"
 import ChangePasswordPage from "@/features/auth/pages/ChangePasswordPage"
 import ProfilePage from "@/features/profile/pages/ProfilePage"
 
-import MembersPage from "@/pages/MembersPage"
+import MembersPage from "@/features/shared/pages/MembersPage"
 import FlaggedMembersPage from "@/features/shared/pages/FlaggedMembersPage"
 
 import AdminDashboardPage from "@/features/shared/pages/AdminDashboardPage"
