@@ -13,3 +13,11 @@ export const getStaffMemberDashboardApi = (
 ) => {
   return API.get(`/staff/members/${memberId}/dashboard`, { params })
 }
+
+export const getRegistrationTrendApi = () => {
+  return API.get("/admin/dashboard/registrations")
+}
+
+export const getFlaggedVitalsDistributionApi = () => {
+  return API.get("/admin/dashboard/flagged-vitals")
+}
