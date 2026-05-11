@@ -43,7 +43,11 @@ export default function RegistrationTrendChart({ data }: Props) {
                 tickFormatter={(value: string) => value.slice(5, 10)}
               />
 
-              <YAxis hide />
+              <YAxis
+                axisLine={false}
+                tickLine={false}
+                tick={{ fontSize: 11, fill: "#9ca3af" }}
+              />
 
               <Tooltip
                 cursor={false}
