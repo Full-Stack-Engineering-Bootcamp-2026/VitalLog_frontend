@@ -1,26 +1,22 @@
 "use client"
 
-import { Outlet } from "react-router-dom"
-
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
-
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 import { AppSidebar } from "./AppSidebar"
 import { Navbar } from "./Navbar"
+import { Outlet } from "react-router-dom"
 
 export default function AppLayout() {
   return (
     <SidebarProvider>
-      <AppSidebar />
-
-      <SidebarInset className="flex min-h-screen flex-col bg-[#cad1cd]">
-        <Navbar />
-
-        <main className="flex-1 overflow-auto p-6">
-          <div className="rounded-2xl bg-white p-6 shadow-sm">
+      <div className="flex h-screen w-screen overflow-hidden">
+        <AppSidebar />
+        <SidebarInset className="flex flex-1 flex-col">
+          <Navbar />
+          <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-4">
             <Outlet />
-          </div>
-        </main>
-      </SidebarInset>
+          </main>
+        </SidebarInset>
+      </div>
     </SidebarProvider>
   )
 }
