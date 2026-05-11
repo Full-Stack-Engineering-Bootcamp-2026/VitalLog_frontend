@@ -21,7 +21,11 @@ import { Progress } from "@/components/ui/progress"
 import { forceResetPasswordApi } from "../api/authApi"
 import { toast } from "sonner"
 import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import type { AppDispatch } from "@/app/store"
+import { logout } from "@/features/auth/authSlice"
 import type { ForceResetPasswordRequestDto } from "../types/auth.types"
+
 const resetSchema = z
   .object({
     password: z
@@ -48,6 +52,7 @@ export default function ForceResetPasswordPage() {
 
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const navigate = useNavigate()
+  const dispatch = useDispatch<AppDispatch>()
 
   const form = useForm<ResetFormData>({
     resolver: zodResolver(resetSchema),
@@ -94,9 +99,11 @@ export default function ForceResetPasswordPage() {
     try {
       await forceResetPasswordApi(data)
 
-      toast.success("Password updated successfully")
+      dispatch(logout())
 
-      navigate("/")
+      toast.success("Password updated successfully. Please login again.")
+
+      navigate("/login", { replace: true })
     } catch (error) {
       console.log(error)
 
@@ -168,7 +175,6 @@ export default function ForceResetPasswordPage() {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-5"
               >
-                {/* Password */}
                 <FormField
                   control={form.control}
                   name="password"
@@ -200,7 +206,7 @@ export default function ForceResetPasswordPage() {
                           </button>
                         </div>
                       </FormControl>
-                      {/* Password Strength */}
+
                       <div className="space-y-2">
                         <Progress value={strength} className="h-2" />
 
@@ -218,7 +224,6 @@ export default function ForceResetPasswordPage() {
                   )}
                 />
 
-                {/* Confirm Password */}
                 <FormField
                   control={form.control}
                   name="confirmPassword"
@@ -269,8 +274,6 @@ export default function ForceResetPasswordPage() {
           </CardContent>
         </Card>
       </div>
-
-      {/* Footer */}
     </div>
   )
 }
