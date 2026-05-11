@@ -28,7 +28,8 @@ export function AppSidebar() {
 
   const handleLogout = () => {
     dispatch(logout())
-    navigate("/login")  }
+    navigate("/login", { replace: true })
+  }
 
   return (
     <Sidebar collapsible="icon" className="border-r border-gray-200 bg-white">
@@ -50,6 +51,7 @@ export function AppSidebar() {
           )}
         </div>
       </SidebarHeader>
+
       {/* Nav items */}
       <SidebarContent className="px-2 py-4">
         <SidebarMenu className="space-y-1">
@@ -60,20 +62,23 @@ export function AppSidebar() {
                 <NavLink
                   to={item.path}
                   end={item.path === "/"}
-                  onClick={() => setOpenMobile(false)}>
+                  onClick={() => setOpenMobile(false)}
+                >
                   {({ isActive }) => (
                     <SidebarMenuButton
                       tooltip={item.title}
                       isActive={isActive}
-                      className={`w-full rounded-lg px-3 py-2.5 text-sm font-medium transition-colors  ${
+                      className={`w-full rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                         isActive
                           ? "bg-green-50 text-green-700 hover:bg-green-50 hover:text-green-700"
                           : "text-gray-500 hover:bg-green-50 hover:text-green-700"
-                      }`}>
+                      }`}
+                    >
                       <Icon
                         className={`h-4 w-4 shrink-0 ${
                           isActive ? "text-green-600" : "text-gray-500"
-                        }`}/>
+                        }`}
+                      />
                       <span>{item.title}</span>
                     </SidebarMenuButton>
                   )}

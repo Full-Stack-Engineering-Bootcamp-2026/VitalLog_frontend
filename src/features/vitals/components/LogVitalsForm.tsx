@@ -30,15 +30,17 @@ const HEALTHY_TIPS = [
   "Resting heart rate is best taken right after waking up while still in bed.",
 ]
 
-// limits based on critical band from vital.constants.ts
+// absolute physiological limits — not clinical ranges
+// clinical ranges live in vital.constants.ts and are used by backend status calculation
+// these limits only block humanly impossible values
 const VITAL_LIMITS = {
-  HEART_RATE:    { min: 40,  max: 130, unit: "bpm"   },
-  BLOOD_GLUCOSE: { min: 50,  max: 200, unit: "mg/dL" },
-  WEIGHT:        { min: 20,  max: 150, unit: "kg"    },
-  SLEEP:         { min: 3,   max: 12,  unit: "hours" },
+  HEART_RATE: { min: 20, max: 300, unit: "bpm" },
+  BLOOD_GLUCOSE: { min: 20, max: 600, unit: "mg/dL" },
+  WEIGHT: { min: 5, max: 300, unit: "kg" },
+  SLEEP: { min: 0, max: 24, unit: "hours" },
   BLOOD_PRESSURE: {
-    systolic:  { min: 70, max: 160 },
-    diastolic: { min: 40, max: 100 },
+    systolic: { min: 50, max: 300 },
+    diastolic: { min: 20, max: 200 },
   },
 } as const
 
@@ -120,7 +122,9 @@ export default function LogVitalsForm() {
 
     if (card.vitalType === "BLOOD_PRESSURE") {
       if (!card.systolicValue || !card.diastolicValue) {
-        toast.error("Please enter both systolic and diastolic values.", { duration: 3000 })
+        toast.error("Please enter both systolic and diastolic values.", {
+          duration: 3000,
+        })
         return
       }
 
@@ -130,17 +134,22 @@ export default function LogVitalsForm() {
       const diaLimits = VITAL_LIMITS.BLOOD_PRESSURE.diastolic
 
       if (isNaN(sys) || sys < sysLimits.min || sys > sysLimits.max) {
-        toast.error(`Systolic must be between ${sysLimits.min} and ${sysLimits.max} mmHg.`, { duration: 3000 })
+        toast.error(
+          `Systolic must be between ${sysLimits.min} and ${sysLimits.max} mmHg.`,
+          { duration: 3000 }
+        )
         return
       }
       if (isNaN(dia) || dia < diaLimits.min || dia > diaLimits.max) {
-        toast.error(`Diastolic must be between ${diaLimits.min} and ${diaLimits.max} mmHg.`, { duration: 3000 })
+        toast.error(
+          `Diastolic must be between ${diaLimits.min} and ${diaLimits.max} mmHg.`,
+          { duration: 3000 }
+        )
         return
       }
 
       payload.systolicValue = sys
       payload.diastolicValue = dia
-
     } else {
       if (!card.value) {
         toast.error("Please enter a value.", { duration: 3000 })
@@ -148,7 +157,9 @@ export default function LogVitalsForm() {
       }
 
       const val = parseFloat(card.value)
-      const limits = VITAL_LIMITS[card.vitalType as keyof typeof VITAL_LIMITS] as {
+      const limits = VITAL_LIMITS[
+        card.vitalType as keyof typeof VITAL_LIMITS
+      ] as {
         min: number
         max: number
         unit: string
@@ -204,27 +215,35 @@ export default function LogVitalsForm() {
       return (
         <div className="flex items-center gap-3">
           <div className="flex-1">
-            <Label className="text-xs text-gray-400">Systolic (70–160 mmHg)</Label>
+            <Label className="text-xs text-gray-400">
+              Systolic (50–300 mmHg)
+            </Label>
             <Input
               type="number"
-              min={70}
-              max={160}
+              min={50}
+              max={300}
               placeholder="120"
               value={card.systolicValue}
-              onChange={(e) => updateCard(card.id, { systolicValue: e.target.value })}
+              onChange={(e) =>
+                updateCard(card.id, { systolicValue: e.target.value })
+              }
               className="mt-1"
             />
           </div>
           <span className="mt-5 text-gray-400">/</span>
           <div className="flex-1">
-            <Label className="text-xs text-gray-400">Diastolic (40–100 mmHg)</Label>
+            <Label className="text-xs text-gray-400">
+              Diastolic (20–200 mmHg)
+            </Label>
             <Input
               type="number"
-              min={40}
-              max={100}
+              min={20}
+              max={200}
               placeholder="80"
               value={card.diastolicValue}
-              onChange={(e) => updateCard(card.id, { diastolicValue: e.target.value })}
+              onChange={(e) =>
+                updateCard(card.id, { diastolicValue: e.target.value })
+              }
               className="mt-1"
             />
           </div>
@@ -235,11 +254,11 @@ export default function LogVitalsForm() {
     if (card.vitalType === "SLEEP") {
       return (
         <div>
-          <Label className="text-xs text-gray-400">Hours (3–12)</Label>
+          <Label className="text-xs text-gray-400">Hours (0–24)</Label>
           <Input
             type="number"
-            min={3}
-            max={12}
+            min={0}
+            max={24}
             placeholder="Enter hours"
             value={card.value}
             onChange={(e) => updateCard(card.id, { value: e.target.value })}
@@ -250,16 +269,17 @@ export default function LogVitalsForm() {
     }
 
     const labelMap: Partial<Record<VitalType, string>> = {
-      HEART_RATE:    "BPM (40–130)",
-      BLOOD_GLUCOSE: "mg/dL (50–200)",
-      WEIGHT:        "kg (20–150)",
+      HEART_RATE: "BPM (20–300)",
+      BLOOD_GLUCOSE: "mg/dL (20–600)",
+      WEIGHT: "kg (5–300)",
     }
 
-    const minMaxMap: Partial<Record<VitalType, { min: number; max: number }>> = {
-      HEART_RATE:    { min: 40,  max: 130 },
-      BLOOD_GLUCOSE: { min: 50,  max: 200 },
-      WEIGHT:        { min: 20,  max: 150 },
-    }
+    const minMaxMap: Partial<Record<VitalType, { min: number; max: number }>> =
+      {
+        HEART_RATE: { min: 20, max: 300 },
+        BLOOD_GLUCOSE: { min: 20, max: 600 },
+        WEIGHT: { min: 5, max: 300 },
+      }
 
     const limits = card.vitalType ? minMaxMap[card.vitalType] : undefined
 
@@ -283,29 +303,32 @@ export default function LogVitalsForm() {
 
   return (
     <div className="mx-auto max-w-4xl">
-
       {/* header */}
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Log Today's Vitals</h1>
+          <h1 className="text-2xl font-bold text-gray-900">
+            Log Today's Vitals
+          </h1>
           <p className="mt-1 text-sm text-gray-500">
             Keep track of your health journey with a quick daily update.
           </p>
         </div>
-        <Button onClick={handleDone} variant="outline" className="border-gray-200">
+        <Button
+          onClick={handleDone}
+          variant="outline"
+          className="border-gray-200"
+        >
           Done
         </Button>
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-
         {/* left — form */}
         <div className="lg:col-span-2">
           <div className="space-y-4">
-
             {/* date */}
-            <div className="rounded-xl bg-white p-4 shadow-sm">
-              <Label className="text-xs font-medium uppercase tracking-wide text-gray-400">
+            <div className="rounded-xl bg-white p-4 shadow-sm transition-shadow duration-200 hover:shadow-md">
+              <Label className="text-xs font-medium tracking-wide text-gray-400 uppercase">
                 Entry Date
               </Label>
               <Input
@@ -321,7 +344,7 @@ export default function LogVitalsForm() {
             {cards.map((card) => (
               <div
                 key={card.id}
-                className={`rounded-xl border bg-white p-5 shadow-sm transition-colors ${
+                className={`rounded-xl border bg-white p-5 shadow-sm transition-shadow duration-200 hover:shadow-md ${
                   card.saved ? "border-green-200" : "border-gray-100"
                 }`}
               >
@@ -406,10 +429,10 @@ export default function LogVitalsForm() {
 
         {/* right — tip cards */}
         <div className="space-y-4">
-          <div className="rounded-xl bg-white p-4 shadow-sm">
+          <div className="rounded-xl bg-white p-4 shadow-sm transition-shadow duration-200 hover:shadow-md">
             <div className="mb-3 flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-green-500" />
-              <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+              <p className="text-xs font-semibold tracking-wide text-gray-500 uppercase">
                 Healthy Tips
               </p>
             </div>
@@ -423,10 +446,14 @@ export default function LogVitalsForm() {
             </ul>
           </div>
 
-          <div className="relative overflow-hidden rounded-xl bg-green-900 p-4">
+          <div className="relative overflow-hidden rounded-xl bg-green-900 p-4 transition-shadow duration-200 hover:shadow-lg">
             <div className="relative z-10">
-              <p className="text-sm font-semibold text-white">Join the Morning Flow</p>
-              <p className="mt-1 text-xs text-green-300">Live session starting in 20 mins</p>
+              <p className="text-sm font-semibold text-white">
+                Join the Morning Flow
+              </p>
+              <p className="mt-1 text-xs text-green-300">
+                Live session starting in 20 mins
+              </p>
             </div>
             <div
               className="absolute inset-0 opacity-20"
@@ -443,7 +470,7 @@ export default function LogVitalsForm() {
 
       {/* consistency pays off — streak card */}
       {streak.currentStreak > 0 && (
-        <div className="mt-6 flex items-center justify-between rounded-xl border border-violet-100 bg-violet-50 px-5 py-4">
+        <div className="mt-6 flex items-center justify-between rounded-xl border border-violet-100 bg-violet-50 px-5 py-4 transition-shadow duration-200 hover:shadow-md">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-violet-100">
               <Flame className="h-5 w-5 text-violet-600" />
@@ -453,7 +480,8 @@ export default function LogVitalsForm() {
                 Consistency Pays Off!
               </p>
               <p className="text-xs text-violet-500">
-                You're on a {streak.currentStreak}-day streak of logging your vitals. Keep it up!
+                You're on a {streak.currentStreak}-day streak of logging your
+                vitals. Keep it up!
               </p>
             </div>
           </div>
@@ -461,11 +489,12 @@ export default function LogVitalsForm() {
             <p className="text-2xl font-bold text-violet-700">
               {String(streak.currentStreak).padStart(2, "0")}
             </p>
-            <p className="text-xs font-medium uppercase text-violet-400">Days</p>
+            <p className="text-xs font-medium text-violet-400 uppercase">
+              Days
+            </p>
           </div>
         </div>
       )}
-
     </div>
   )
 }
