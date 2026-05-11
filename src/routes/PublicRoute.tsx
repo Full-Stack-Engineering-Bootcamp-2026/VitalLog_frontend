@@ -9,11 +9,23 @@ interface Props {
 }
 
 export default function PublicRoute({ children }: Props) {
-  const token = useSelector((state: RootState) => state.auth.token)
+  const { token, user } = useSelector((state: RootState) => state.auth)
 
-  if (token) {
-    return <Navigate to="/" replace />
+  if (!token || !user) {
+    return children
   }
 
-  return children
+  if (user.mustChangePassword) {
+    return <Navigate to="/force-reset-password" replace />
+  }
+
+  if (user.role === "ADMIN") {
+    return <Navigate to="/admin/dashboard" replace />
+  }
+
+  if (user.role === "STAFF") {
+    return <Navigate to="/staff/dashboard" replace />
+  }
+
+  return <Navigate to="/dashboard/member" replace />
 }

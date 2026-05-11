@@ -9,15 +9,7 @@ import { Button } from "@/components/ui/button"
 
 import { Input } from "@/components/ui/input"
 
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 
 import {
   Form,
@@ -39,7 +31,14 @@ import { useState } from "react"
 const loginSchema = z.object({
   email: z.email("Enter valid email"),
 
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .max(64, "Password cant exceed 64 characters")
+    .regex(/[A-Z]/, "Password must contain uppercase letter")
+    .regex(/[a-z]/, "Password must contain lowercase letter")
+    .regex(/[0-9]/, "Password must contain number")
+    .regex(/[^A-Za-z0-9]/, "Password must contain special character"),
 })
 
 type LoginFormData = z.infer<typeof loginSchema>
@@ -52,7 +51,7 @@ export default function LoginPage() {
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
-
+    mode: "onChange",
     defaultValues: {
       email: "",
       password: "",
@@ -62,20 +61,35 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginFormData) => {
     try {
       const response = await loginApi(data)
-
+      //for nested response
+      const authData = response.data.data
+      const user = authData.user
       dispatch(
         setAuth({
-          token: response.data.data.accessToken,
-          user: response.data.data.user,
+          token: authData.accessToken,
+          user: authData.user,
         })
       )
 
-      if (response.data.data.user.mustChangePassword) {
+      if (authData.user.mustChangePassword) {
         toast.warning("Password reset required")
         navigate("/force-reset-password")
       } else {
         toast.success("Login successful")
-        navigate("/")
+        if (user.role === "ADMIN") {
+          navigate("/admin/dashboard")
+          return
+        }
+
+        if (user.role === "STAFF") {
+          navigate("/staff/dashboard")
+          return
+        }
+
+        if (user.role === "MEMBER") {
+          navigate("/dashboard/member")
+          return
+        }
       }
     } catch (error) {
       console.log(error)
