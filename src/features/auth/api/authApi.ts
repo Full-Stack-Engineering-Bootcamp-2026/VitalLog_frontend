@@ -23,6 +23,10 @@ export const createStaffApi = (data: CreateStaffRequestDto) => {
   return API.post("/admin/staff", data)
 }
 
+export const fetchStaffApi = ()=>{
+  return API.get("/admin/staff")
+}
+
 export const changePasswordApi = (data: {
   currentPassword: string
   newPassword: string
