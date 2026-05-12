@@ -28,6 +28,7 @@ import StaffMemberDashboardPage from "@/features/shared/pages/StaffMemberDashboa
 import ForgotPasswordPage from "@/features/auth/pages/ForgotPasswordPage"
 import ResetPasswordPage from "@/features/auth/pages/ResetPasswordPage"
 import ProfileEditPage from "@/features/profile/pages/ProfileEditPage"
+import ProtectedRoute from "./ProtectedRoute"
 
 export const router = createBrowserRouter([
   {
@@ -55,10 +56,6 @@ export const router = createBrowserRouter([
   },
 
   {
-    path: "change-password",
-    element: <ChangePasswordPage />,
-  },
-  {
     path: "forgot-password",
     element: <ForgotPasswordPage />,
   },
@@ -68,7 +65,12 @@ export const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <AppLayout />,
+
+    element: (
+      <ProtectedRoute>
+        <AppLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: "/dashboard/member",
@@ -117,6 +119,10 @@ export const router = createBrowserRouter([
       {
         path: "/flagged-members",
         element: <FlaggedMembersPage />,
+      },
+      {
+        path: "change-password",
+        element: <ChangePasswordPage />,
       },
 
       {
