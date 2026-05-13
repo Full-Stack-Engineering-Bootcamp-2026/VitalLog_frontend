@@ -67,28 +67,27 @@ export default function FlaggedMembersPage() {
     setPage(1)
   }
 
-  const handleResolve = async () => {
-    if (!selectedFlagId) return
-
-    if (!resolutionNote.trim()) {
+  const handleResolve = async (flagId: number, note: string) => {
+    if (!note.trim()) {
       toast.error("Resolution note is required")
+
       return
     }
 
     try {
-      await resolveFlagApi(selectedFlagId, { resolutionNote })
+      await resolveFlagApi(flagId, {
+        resolutionNote: note,
+      })
 
       toast.success("Flag resolved successfully")
 
-      setSelectedFlagId(null)
-      setResolutionNote("")
       fetchFlags()
     } catch (error) {
       console.log(error)
+
       toast.error("Failed to resolve flag")
     }
   }
-
   return (
     <div className="space-y-6 p-4 sm:p-6">
       <div>
@@ -137,7 +136,7 @@ export default function FlaggedMembersPage() {
             flags={flags}
             isStaff={isStaff}
             isAdmin={isAdmin}
-            onResolveClick={setSelectedFlagId}
+            onResolveClick={handleResolve}
           />
 
           <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

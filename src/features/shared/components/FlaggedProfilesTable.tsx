@@ -9,7 +9,7 @@ type Props = {
   flags: FlagListItemResponseDto[]
   isStaff: boolean
   isAdmin: boolean
-  onResolveClick: (flagId: number) => void
+  onResolveClick: (flagId: number, note: string) => void
 }
 
 export default function FlaggedProfilesTable({
@@ -64,7 +64,11 @@ export default function FlaggedProfilesTable({
               </td>
 
               <td className="px-4 py-4 text-right">
-                {isStaff && flag.status === "OPEN" && <ResolveFlagModal />}
+                {isStaff && flag.status === "OPEN" && (
+                  <ResolveFlagModal
+                    onResolve={(note) => onResolveClick(flag.id, note)}
+                  />
+                )}
 
                 {isStaff && flag.status === "RESOLVED" && (
                   <Button size="sm" variant="outline" disabled>
