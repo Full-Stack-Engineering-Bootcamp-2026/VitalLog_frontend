@@ -4,8 +4,12 @@ import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 import { AppSidebar } from "./AppSidebar"
 import { Navbar } from "./Navbar"
 import { Outlet } from "react-router-dom"
-
+import { requestNotificationPermission } from "@/firebase/notification"
+import { useEffect } from "react"
 export default function AppLayout() {
+  useEffect(() => {
+    requestNotificationPermission()
+  }, [])
   return (
     <SidebarProvider>
       <div className="flex h-screen w-screen overflow-hidden">
