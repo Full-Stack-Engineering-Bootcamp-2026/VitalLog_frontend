@@ -3,12 +3,13 @@ import { Button } from "@/components/ui/button"
 import FlagStatusBadge from "./FlagStatusBadge"
 
 import type { FlagListItemResponseDto } from "../types/flag.types"
+import { ResolveFlagModal } from "./ResolveFlagModal"
 
 type Props = {
   flags: FlagListItemResponseDto[]
   isStaff: boolean
   isAdmin: boolean
-  onResolveClick: (flagId: number) => void
+  onResolveClick: (flagId: number, note: string) => void
 }
 
 export default function FlaggedProfilesTable({
@@ -64,9 +65,9 @@ export default function FlaggedProfilesTable({
 
               <td className="px-4 py-4 text-right">
                 {isStaff && flag.status === "OPEN" && (
-                  <Button size="sm" onClick={() => onResolveClick(flag.id)}>
-                    Resolve
-                  </Button>
+                  <ResolveFlagModal
+                    onResolve={(note) => onResolveClick(flag.id, note)}
+                  />
                 )}
 
                 {isStaff && flag.status === "RESOLVED" && (
